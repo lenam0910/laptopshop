@@ -1,5 +1,7 @@
 package vn.quocdk.laptopshop.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import vn.quocdk.laptopshop.domain.Product;
 
@@ -10,9 +12,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Product findById(long id);
 
-    List<Product> findAll();
-
-    void deleteById(Long id);
+    void deleteById(long id);
 
     List<Product> findTop4ByPurpose(String purpose);
+
+    Page<Product> findAll(Pageable pageable);
 }

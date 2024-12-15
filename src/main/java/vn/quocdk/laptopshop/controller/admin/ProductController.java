@@ -1,10 +1,21 @@
 package vn.quocdk.laptopshop.controller.admin;
 
 import jakarta.validation.Valid;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import vn.quocdk.laptopshop.domain.Product;
 import vn.quocdk.laptopshop.service.FileService;
@@ -22,8 +33,21 @@ public class ProductController {
     }
 
     @GetMapping("/admin/product")
-    public String getProductListPage(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
+    public String getProductListPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+        int page = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                page = Integer.parseInt(pageOptional.get());
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        Pageable pageable = PageRequest.of(page - 1, 5);
+        Page<Product> productsRaw = productService.getAllProducts(pageable);
+        List<Product> products = productsRaw.getContent();
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productsRaw.getTotalPages());
+        model.addAttribute("products", products);
         return "admin/product/show";
     }
 
