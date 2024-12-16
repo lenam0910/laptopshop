@@ -1,5 +1,7 @@
 package vn.quocdk.laptopshop.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.quocdk.laptopshop.domain.Role;
 import vn.quocdk.laptopshop.domain.User;
@@ -27,8 +29,8 @@ public class UserService {
         this.productRepository = productRepository;
     }
 
-    public List<User> getAllUsers() {
-        return this.userRepository.findAll();
+    public Page<User> getAllUsers(Pageable pageable) {
+        return this.userRepository.findAll(pageable);
     }
 
     public User handleSaveUser(User user) {

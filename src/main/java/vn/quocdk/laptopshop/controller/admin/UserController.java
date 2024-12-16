@@ -2,6 +2,10 @@ package vn.quocdk.laptopshop.controller.admin;
 
 import jakarta.servlet.ServletContext;
 import jakarta.validation.Valid;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +17,7 @@ import vn.quocdk.laptopshop.service.FileService;
 import vn.quocdk.laptopshop.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -38,9 +43,20 @@ public class UserController {
     }
 
     @RequestMapping("/admin/user")
-    public String getUserPage(Model model) {
-        List<User> users = this.userService.getAllUsers();
-        model.addAttribute("users", users);
+    public String getUserPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+        int page = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                page = Integer.parseInt(pageOptional.get());
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        Pageable pageable = PageRequest.of(page - 1, 5);
+        Page<User> usersRaw = this.userService.getAllUsers(pageable);
+        model.addAttribute("users", usersRaw.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", usersRaw.getTotalPages());
         return "admin/user/show";
     }
 
@@ -60,10 +76,9 @@ public class UserController {
 
     @PostMapping(value = "/admin/user/create")
     public String createUserPage(Model model,
-                                 @ModelAttribute("newUser") @Valid User user,
-                                 BindingResult newUserBindingResult,
-                                 @RequestParam("imageFile") MultipartFile file
-    ) {
+            @ModelAttribute("newUser") @Valid User user,
+            BindingResult newUserBindingResult,
+            @RequestParam("imageFile") MultipartFile file) {
 
         // validate
         if (newUserBindingResult.hasErrors()) {
@@ -89,8 +104,8 @@ public class UserController {
 
     @PostMapping("/admin/user/update")
     public String postUpdateUser(Model model,
-                                 @ModelAttribute("user") User user,
-                                 @RequestParam("imageFile") MultipartFile file) {
+            @ModelAttribute("user") User user,
+            @RequestParam("imageFile") MultipartFile file) {
 
         User currentUser = userService.getUserById(user.getId());
 

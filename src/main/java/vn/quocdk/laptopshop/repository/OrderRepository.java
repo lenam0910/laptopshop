@@ -2,6 +2,8 @@ package vn.quocdk.laptopshop.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +15,7 @@ import vn.quocdk.laptopshop.domain.User;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    List<Order> findAll();
+    Page<Order> findAll(Pageable pageable);
 
     List<Order> findByUser(User user);
 

@@ -59,6 +59,29 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
+
+                                <nav>
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
+                                            <a class="page-link" href="/admin/order?page=${currentPage-1}"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <c:forEach begin="1" end="${totalPages}" varStatus="loop">
+                                            <li class="page-item">
+                                                <a class="page-link ${currentPage == loop.index ? 'active' : ''}"
+                                                    href="/admin/order?page=${loop.index}">${loop.index}
+                                                </a>
+                                            </li>
+                                        </c:forEach>
+                                        <a class="page-link ${currentPage == totalPages ? 'disabled' : ''}"
+                                            href="/admin/order?page=${currentPage+1}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </main>
                         <jsp:include page="../layout/footer.jsp" />
