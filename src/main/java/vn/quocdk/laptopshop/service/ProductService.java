@@ -2,6 +2,7 @@ package vn.quocdk.laptopshop.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vn.quocdk.laptopshop.domain.Product;
 import vn.quocdk.laptopshop.repository.ProductRepository;
@@ -23,6 +24,11 @@ public class ProductService {
 
     public Page<Product> getAllProducts(Pageable pageable) {
         return productRepository.findAll(pageable);
+    }
+
+    public Page<Product> getProductWithSpecs(Pageable pageable, Specification<Product> specs) {
+
+        return null;
     }
 
     public void deleteProductById(long id) {
