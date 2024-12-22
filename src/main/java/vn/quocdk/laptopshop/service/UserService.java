@@ -11,8 +11,6 @@ import vn.quocdk.laptopshop.repository.ProductRepository;
 import vn.quocdk.laptopshop.repository.RoleRepository;
 import vn.quocdk.laptopshop.repository.UserRepository;
 
-import java.util.List;
-
 @Service
 public class UserService {
 
@@ -22,7 +20,7 @@ public class UserService {
     private final OrderRepository orderRepository;
 
     public UserService(UserRepository userRepository,
-            RoleRepository roleRepository, ProductRepository productRepository, OrderRepository orderRepository) {
+                       RoleRepository roleRepository, ProductRepository productRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.orderRepository = orderRepository;

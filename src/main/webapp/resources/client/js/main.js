@@ -107,7 +107,7 @@
         },
     });
 
-    
+
     // Product Quantity
     $(".quantity button").on("click", function () {
         let change = 0;
@@ -119,7 +119,7 @@
         } else {
             if (oldValue > 1) {
                 var newVal = parseFloat(oldValue) - 1;
-                change =-1;
+                change = -1;
             } else {
                 newVal = 1;
             }
@@ -157,13 +157,13 @@
             });
         }
 
-         //Confirm cart detail index after checking out
+        //Confirm cart detail index after checking out
         const index = input.attr("data-cart-detail-index")
         const el = document.getElementById(`cartDetails${index}.quantity`);
         $(el).val(newVal);
     });
 
-    $(".input-group-btn button").on("click", function(event){
+    $(".input-group-btn button").on("click", function (event) {
         event.preventDefault();
     });
 

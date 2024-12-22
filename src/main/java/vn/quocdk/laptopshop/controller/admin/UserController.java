@@ -2,7 +2,6 @@ package vn.quocdk.laptopshop.controller.admin;
 
 import jakarta.servlet.ServletContext;
 import jakarta.validation.Valid;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +15,6 @@ import vn.quocdk.laptopshop.domain.User;
 import vn.quocdk.laptopshop.service.FileService;
 import vn.quocdk.laptopshop.service.UserService;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -76,9 +74,9 @@ public class UserController {
 
     @PostMapping(value = "/admin/user/create")
     public String createUserPage(Model model,
-            @ModelAttribute("newUser") @Valid User user,
-            BindingResult newUserBindingResult,
-            @RequestParam("imageFile") MultipartFile file) {
+                                 @ModelAttribute("newUser") @Valid User user,
+                                 BindingResult newUserBindingResult,
+                                 @RequestParam("imageFile") MultipartFile file) {
 
         // validate
         if (newUserBindingResult.hasErrors()) {
@@ -104,8 +102,8 @@ public class UserController {
 
     @PostMapping("/admin/user/update")
     public String postUpdateUser(Model model,
-            @ModelAttribute("user") User user,
-            @RequestParam("imageFile") MultipartFile file) {
+                                 @ModelAttribute("user") User user,
+                                 @RequestParam("imageFile") MultipartFile file) {
 
         User currentUser = userService.getUserById(user.getId());
 

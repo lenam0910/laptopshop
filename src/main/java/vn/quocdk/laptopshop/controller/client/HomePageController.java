@@ -1,9 +1,7 @@
 package vn.quocdk.laptopshop.controller.client;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import vn.quocdk.laptopshop.domain.Product;
 import vn.quocdk.laptopshop.domain.User;
 import vn.quocdk.laptopshop.domain.dto.RegisterDTO;
@@ -22,8 +21,6 @@ import vn.quocdk.laptopshop.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomePageController {
@@ -90,7 +87,12 @@ public class HomePageController {
     }
 
     @GetMapping("products")
-    public String getProductPage(Model model, @RequestParam("page") Optional<String> pageOptional) {
+    public String getProductPage(Model model,
+            @RequestParam("page") Optional<String> pageOptional,
+            @RequestParam("min-price") Optional<String> minPrice,
+            @RequestParam("max-price") Optional<String> maxPrice,
+            @RequestParam("brand") Optional<String> brand,
+            @RequestParam("price-range") Optional<String> priceRange) {
         int page = 1;
         try {
             if (pageOptional.isPresent()) {
@@ -104,11 +106,12 @@ public class HomePageController {
             // TODO: handle exception
         }
         Pageable pageable = PageRequest.of(page - 1, 6);
-        Page<Product> prs = this.productService.getAllProducts(pageable);
+        Page<Product> prs = this.productService.getProductWithBrandList(pageable, brand);
         List<Product> products = prs.getContent();
+        int totalPages = prs.getTotalPages();
         model.addAttribute("products", products);
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", prs.getTotalPages());
+        model.addAttribute("totalPages", totalPages);
         return "client/product/show";
     }
 

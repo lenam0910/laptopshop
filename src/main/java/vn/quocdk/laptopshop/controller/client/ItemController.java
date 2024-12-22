@@ -4,23 +4,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import vn.quocdk.laptopshop.domain.Cart;
-import vn.quocdk.laptopshop.domain.CartDetail;
-import vn.quocdk.laptopshop.domain.Order;
-import vn.quocdk.laptopshop.domain.Product;
-import vn.quocdk.laptopshop.domain.User;
+import org.springframework.web.bind.annotation.*;
+import vn.quocdk.laptopshop.domain.*;
 import vn.quocdk.laptopshop.service.CartService;
 import vn.quocdk.laptopshop.service.OrderService;
 import vn.quocdk.laptopshop.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ItemController {
@@ -101,8 +92,8 @@ public class ItemController {
 
     @PostMapping("place-order")
     public String handlePlaceOrder(HttpServletRequest request, @RequestParam("receiverName") String receiverName,
-            @RequestParam("receiverAddress") String receiverAddress,
-            @RequestParam("receiverPhone") String receiverPhone) {
+                                   @RequestParam("receiverAddress") String receiverAddress,
+                                   @RequestParam("receiverPhone") String receiverPhone) {
         User currentUser = new User();
         HttpSession session = request.getSession(false);
         long id = (long) session.getAttribute("id");
@@ -113,7 +104,7 @@ public class ItemController {
 
     @GetMapping("add-to-cart-with-quantity/{id}")
     public String postMethodName(@PathVariable long id,
-            @RequestParam(name = "quantity") int quantity, HttpServletRequest request) {
+                                 @RequestParam(name = "quantity") int quantity, HttpServletRequest request) {
         HttpSession session = request.getSession();
         long productId = id;
         String email = (String) session.getAttribute("email");

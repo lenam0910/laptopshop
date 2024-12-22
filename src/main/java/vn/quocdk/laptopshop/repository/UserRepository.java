@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import vn.quocdk.laptopshop.domain.User;
 
-import java.util.List;
-
 //crud: create, read, update, delete
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

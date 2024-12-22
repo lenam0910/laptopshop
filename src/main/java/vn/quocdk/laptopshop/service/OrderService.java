@@ -1,22 +1,17 @@
 package vn.quocdk.laptopshop.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import jakarta.servlet.http.HttpSession;
-import vn.quocdk.laptopshop.domain.Cart;
-import vn.quocdk.laptopshop.domain.CartDetail;
-import vn.quocdk.laptopshop.domain.Order;
-import vn.quocdk.laptopshop.domain.OrderDetail;
-import vn.quocdk.laptopshop.domain.User;
+import vn.quocdk.laptopshop.domain.*;
 import vn.quocdk.laptopshop.repository.CartDetailRepository;
 import vn.quocdk.laptopshop.repository.CartRepository;
 import vn.quocdk.laptopshop.repository.OrderDetailRepository;
 import vn.quocdk.laptopshop.repository.OrderRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -26,7 +21,7 @@ public class OrderService {
     private final CartDetailRepository cartDetailRepository;
 
     public OrderService(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository,
-            CartRepository cartRepository, CartDetailRepository cartDetailRepository) {
+                        CartRepository cartRepository, CartDetailRepository cartDetailRepository) {
         this.orderDetailRepository = orderDetailRepository;
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
@@ -46,7 +41,7 @@ public class OrderService {
     }
 
     public void handlePlaceOrder(User user, HttpSession session, String receiverAddress, String receiverName,
-            String receiverPhone) {
+                                 String receiverPhone) {
         // Create order
         Order order = new Order();
         order.setUser(user);

@@ -1,7 +1,8 @@
 package vn.quocdk.laptopshop.service.specification;
 
-import org.springframework.data.jpa.domain.Specification;
+import java.util.List;
 
+import org.springframework.data.jpa.domain.Specification;
 import vn.quocdk.laptopshop.domain.Product;
 import vn.quocdk.laptopshop.domain.Product_;
 
@@ -23,8 +24,8 @@ public class ProductSpecs {
         return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get(Product_.PRICE), maxPrice);
     }
 
-    public static Specification<Product> manufacturedBy(String factory) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(Product_.FACTORY), factory);
+    public static Specification<Product> manufacturedBy(List<String> factoryList) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get(Product_.FACTORY)).value(factoryList);
     }
 
 }
