@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vn.quocdk.laptopshop.domain.Product;
+import vn.quocdk.laptopshop.domain.dto.ProductCriteriaDTO;
 import vn.quocdk.laptopshop.repository.ProductRepository;
 import vn.quocdk.laptopshop.service.specification.ProductSpecs;
 
@@ -28,31 +29,59 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
-    public Page<Product> getProductWithPriceRange(Pageable pageable, Optional<String> priceRangeOptional) {
-        String priceRange = priceRangeOptional.isPresent() ? priceRangeOptional.get() : "";
-        switch (priceRange) {
-            case "duoi-10-trieu":
-                return productRepository.findAll(ProductSpecs.maximumPrice(10000000), pageable);
-            case "10-den-15-trieu":
-                return productRepository.findAll(ProductSpecs.priceRange(10000000, 15000000), pageable);
-            case "15-den-20-trieu":
-                return productRepository.findAll(ProductSpecs.priceRange(15000000, 20000000), pageable);
-            case "20-den-30-trieu":
-                return productRepository.findAll(ProductSpecs.priceRange(20000000, 30000000), pageable);
-            case "tren-30-trieu":
-                return productRepository.findAll(ProductSpecs.maximumPrice(30000000), pageable);
-            default:
-                return productRepository.findAll(pageable);
+    public Specification<Product> buildPriceSpecification(List<String> priceRangeList) {
+        Specification<Product> combinedSpec = (root, query, criteriaBuilder) -> criteriaBuilder.disjunction();
+        for (String p : priceRangeList) {
+            double min = 0;
+            double max = 0;
+            // Set the appropriate min and max based on the price range string
+            switch (p) {
+                case "duoi-10-trieu":
+                    min = 0;
+                    max = 10000000;
+                    break;
+                case "10-toi-15-trieu":
+                    min = 10000000;
+                    max = 15000000;
+                    break;
+                case "15-toi-20-trieu":
+                    min = 15000000;
+                    max = 20000000;
+                    break;
+                case "20-toi-30-trieu":
+                    min = 20000000;
+                    max = 30000000;
+                    break;
+                case "tren-30-trieu":
+                    min = 30000000;
+                    max = Integer.MAX_VALUE;
+                    break;
+            }
+            if (min != 0 && max != 0) {
+                Specification<Product> rangeSpec = ProductSpecs.priceRange(min, max);
+                combinedSpec = combinedSpec.or(rangeSpec);
+            }
         }
+        return combinedSpec;
     }
 
-    public Page<Product> getProductWithBrandList(Pageable pageable, Optional<String> factories) {
-        if (factories.isPresent()) {
-            List<String> factoryList = List.of(factories.get().split(","));
-            return productRepository.findAll(ProductSpecs.manufacturedBy(factoryList), pageable);
-        } else {
+    public Page<Product> getProductWithSpecification(Pageable pageable, ProductCriteriaDTO productCriteriaDTO) {
+        if (productCriteriaDTO.getFactory() == null
+                && productCriteriaDTO.getPurpose() == null
+                && productCriteriaDTO.getPrice() == null) {
             return productRepository.findAll(pageable);
         }
+        Specification<Product> combinedSpec = Specification.where(null);
+        if (productCriteriaDTO.getFactory() != null && productCriteriaDTO.getFactory().isPresent()) {
+            combinedSpec = combinedSpec.and(ProductSpecs.manufacturedBy(productCriteriaDTO.getFactory().get()));
+        }
+        if (productCriteriaDTO.getPurpose() != null && productCriteriaDTO.getPurpose().isPresent()) {
+            combinedSpec = combinedSpec.and(ProductSpecs.byPurpose(productCriteriaDTO.getPurpose().get()));
+        }
+        if (productCriteriaDTO.getPrice() != null && productCriteriaDTO.getPrice().isPresent()) {
+            combinedSpec = combinedSpec.and(buildPriceSpecification(productCriteriaDTO.getPrice().get()));
+        }
+        return productRepository.findAll(combinedSpec, pageable);
     }
 
     public void deleteProductById(long id) {

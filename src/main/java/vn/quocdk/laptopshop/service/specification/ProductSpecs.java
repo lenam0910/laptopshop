@@ -28,4 +28,7 @@ public class ProductSpecs {
         return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get(Product_.FACTORY)).value(factoryList);
     }
 
+    public static Specification<Product> byPurpose(List<String> purposes) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.in(root.get(Product_.PURPOSE)).value(purposes);
+    }
 }

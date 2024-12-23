@@ -180,6 +180,78 @@
         return formatted;
     }
 
+    //handle filter products
+    $('#btnFilter').click(function (event) {
+        event.preventDefault();
+        let factoryArr = [];
+        let purposeArr = [];
+        let priceArr = [];
+        //factory filter
+        $("#factoryFilter .form-check-input:checked").each(function () {
+            factoryArr.push($(this).val());
+        });
+        //purpose filter
+        $("#purposeFilter .form-check-input:checked").each(function () {
+            purposeArr.push($(this).val());
+        });
+        //price filter
+        $("#priceFilter .form-check-input:checked").each(function () {
+            priceArr.push($(this).val());
+        });
+        //sort order
+        let sortValue = $('input[name="radio-sort"]:checked').val();
+        const currentUrl = new URL(window.location.href);
+        const searchParams = currentUrl.searchParams;
+        // Add or update query parameters
+        searchParams.set('page', '1');
+        searchParams.set('sort', sortValue);
+
+        // reset form
+        searchParams.delete('factory');
+        searchParams.delete('purpose');
+        searchParams.delete('price');
+        if (factoryArr.length > 0) {
+            searchParams.set('factory', factoryArr.join(','));
+        }
+        if (purposeArr.length > 0) {
+            searchParams.set('purpose', purposeArr.join(','));
+        }
+        if (priceArr.length > 0) {
+            searchParams.set('price', priceArr.join(','));
+        }
+        // Update the URL and reload the page
+        window.location.href = currentUrl.toString();
+    });
+    //handle auto checkbox after page loading
+    // Parse the URL parameters
+    const params = new URLSearchParams(window.location.search);
+    // Set checkboxes for 'factory'
+    if (params.has('factory')) {
+        const factories = params.get('factory').split(',');
+        factories.forEach(factory => {
+            $(`#factoryFilter .form-check-input[value="${factory}"]`).prop('checked', true);
+        });
+    }
+    // Set checkboxes for 'purpose'
+    if (params.has('purpose')) {
+        const purposes = params.get('purpose').split(',');
+        purposes.forEach(purpose => {
+            $(`#purposeFilter .form-check-input[value="${purpose}"]`).prop('checked', true);
+        });
+    }
+    // Set checkboxes for 'price'
+    if (params.has('price')) {
+        const prices = params.get('price').split(',');
+        prices.forEach(price => {
+            $(`#priceFilter .form-check-input[value="${price}"]`).prop('checked', true);
+        });
+    }
+    // Set radio buttons for 'sort'
+    if (params.has('sort')) {
+        const sort = params.get('sort');
+        $(`input[type="radio"][name="radio-sort"][value="${sort}"]`).prop('checked', true);
+    }
+
     //add active class to header
     const navElement = $("#navbarCollapse");
     const currentUrl = window.location.pathname;
