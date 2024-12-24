@@ -60,8 +60,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE)
                         .permitAll()
-                        .requestMatchers("/", "/product/**", "/register",
-                                "/login", "/client/**", "/css/**", "/js/**",
+                        .requestMatchers("/", "/products/**", "/register",
+                                "/login", "/client/**", "/css/**", "/js/**", "/product/**",
                                 "/images/**")
                         .permitAll()
 

@@ -33,13 +33,14 @@ public class ItemController {
         return "client/product/detail";
     }
 
-    @PostMapping("add-product-to-cart/{id}")
-    public String addProductToCart(@PathVariable long id, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        String email = (String) session.getAttribute("email");
-        cartService.handleAddProductToCart(email, id, session, 1);
-        return "redirect:/";
-    }
+    // @PostMapping("add-product-to-cart/{id}")
+    // public String addProductToCart(@PathVariable long id, HttpServletRequest
+    // request) {
+    // HttpSession session = request.getSession(false);
+    // String email = (String) session.getAttribute("email");
+    // cartService.handleAddProductToCart(email, id, session, 1);
+    // return "redirect:/";
+    // }
 
     @GetMapping("cart-detail")
     public String getCartDetailPage(Model model, HttpServletRequest request) {
@@ -92,8 +93,8 @@ public class ItemController {
 
     @PostMapping("place-order")
     public String handlePlaceOrder(HttpServletRequest request, @RequestParam("receiverName") String receiverName,
-                                   @RequestParam("receiverAddress") String receiverAddress,
-                                   @RequestParam("receiverPhone") String receiverPhone) {
+            @RequestParam("receiverAddress") String receiverAddress,
+            @RequestParam("receiverPhone") String receiverPhone) {
         User currentUser = new User();
         HttpSession session = request.getSession(false);
         long id = (long) session.getAttribute("id");
@@ -104,7 +105,7 @@ public class ItemController {
 
     @GetMapping("add-to-cart-with-quantity/{id}")
     public String postMethodName(@PathVariable long id,
-                                 @RequestParam(name = "quantity") int quantity, HttpServletRequest request) {
+            @RequestParam(name = "quantity") int quantity, HttpServletRequest request) {
         HttpSession session = request.getSession();
         long productId = id;
         String email = (String) session.getAttribute("email");
