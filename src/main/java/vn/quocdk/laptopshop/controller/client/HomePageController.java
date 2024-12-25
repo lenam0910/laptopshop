@@ -23,7 +23,6 @@ import vn.quocdk.laptopshop.service.ProductService;
 import vn.quocdk.laptopshop.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class HomePageController {
@@ -94,9 +93,9 @@ public class HomePageController {
             HttpServletRequest request) {
         int page = 1;
         try {
-            if (productCriteriaDTO.getPage().isPresent()) {
+            if (productCriteriaDTO.getPage() != null) {
                 // convert from String to int
-                page = Integer.parseInt(productCriteriaDTO.getPage().get());
+                page = Integer.parseInt(productCriteriaDTO.getPage());
             } else {
                 // page = 1
             }
@@ -106,8 +105,8 @@ public class HomePageController {
         }
         // Check sort
         Pageable pageable = null;
-        if (productCriteriaDTO.getSort() != null && productCriteriaDTO.getSort().isPresent()) {
-            String sort = productCriteriaDTO.getSort().get();
+        if (productCriteriaDTO.getSort() != null) {
+            String sort = productCriteriaDTO.getSort();
             switch (sort) {
                 case "gia-tang-dan":
                     pageable = PageRequest.of(page - 1, 6, Sort.by(Product_.PRICE).ascending());
@@ -126,13 +125,14 @@ public class HomePageController {
         List<Product> products = prs.getContent();
         int totalPages = prs.getTotalPages();
         String queryString = request.getQueryString();
-        if (queryString != null && !queryString.isBlank()) {
-            queryString = queryString.replace("page=" + page, "");
+        if (queryString != null && queryString.contains("page")) {
+            queryString = queryString.replace("page=" + page + "&", "");
         }
         model.addAttribute("products", products);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("queryString", queryString);
+        model.addAttribute("criteria", productCriteriaDTO);
         return "client/product/show";
     }
 

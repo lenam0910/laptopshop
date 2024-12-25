@@ -15,16 +15,8 @@
                         <div class="navbar-nav mx-auto">
                             <a href="/" class="nav-item nav-link active">Trang chủ</a>
                             <a href="/products" class="nav-item nav-link">Sản phẩm</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Danh mục</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="#" class="dropdown-item">Cart</a>
-                                    <a href="#" class="dropdown-item">Chackout</a>
-                                    <a href="#" class="dropdown-item">Testimonial</a>
-                                    <a href="#" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div>
-                            <a href="contact.html" class="nav-item nav-link">Liên hệ </a>
+                            <a href="/cart-detail" class="nav-item nav-link">Giỏ hàng</a>
+                            <a href="/order-history" class="nav-item nav-link">Lịch sử mua hàng</a>
                         </div>
                         <div class="d-flex m-3 me-0">
                             <c:if test="${not empty pageContext.request.userPrincipal}">

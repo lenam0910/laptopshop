@@ -72,14 +72,14 @@ public class ProductService {
             return productRepository.findAll(pageable);
         }
         Specification<Product> combinedSpec = Specification.where(null);
-        if (productCriteriaDTO.getFactory() != null && productCriteriaDTO.getFactory().isPresent()) {
-            combinedSpec = combinedSpec.and(ProductSpecs.manufacturedBy(productCriteriaDTO.getFactory().get()));
+        if (productCriteriaDTO.getFactory() != null && !productCriteriaDTO.getFactory().isEmpty()) {
+            combinedSpec = combinedSpec.and(ProductSpecs.manufacturedBy(productCriteriaDTO.getFactory()));
         }
-        if (productCriteriaDTO.getPurpose() != null && productCriteriaDTO.getPurpose().isPresent()) {
-            combinedSpec = combinedSpec.and(ProductSpecs.byPurpose(productCriteriaDTO.getPurpose().get()));
+        if (productCriteriaDTO.getPurpose() != null && !productCriteriaDTO.getPurpose().isEmpty()) {
+            combinedSpec = combinedSpec.and(ProductSpecs.byPurpose(productCriteriaDTO.getPurpose()));
         }
-        if (productCriteriaDTO.getPrice() != null && productCriteriaDTO.getPrice().isPresent()) {
-            combinedSpec = combinedSpec.and(buildPriceSpecification(productCriteriaDTO.getPrice().get()));
+        if (productCriteriaDTO.getPrice() != null && !productCriteriaDTO.getPrice().isEmpty()) {
+            combinedSpec = combinedSpec.and(buildPriceSpecification(productCriteriaDTO.getPrice()));
         }
         return productRepository.findAll(combinedSpec, pageable);
     }

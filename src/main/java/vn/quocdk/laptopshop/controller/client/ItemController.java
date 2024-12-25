@@ -103,15 +103,15 @@ public class ItemController {
         return "redirect:/thankyou";
     }
 
-    @GetMapping("add-to-cart-with-quantity/{id}")
-    public String postMethodName(@PathVariable long id,
-            @RequestParam(name = "quantity") int quantity, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        long productId = id;
-        String email = (String) session.getAttribute("email");
-        cartService.handleAddProductToCart(email, productId, session, quantity);
-        return "redirect:/product/" + productId;
-    }
+    // @GetMapping("add-to-cart-with-quantity/{id}")
+    // public String postMethodName(@PathVariable long id,
+    // @RequestParam(name = "quantity") int quantity, HttpServletRequest request) {
+    // HttpSession session = request.getSession();
+    // long productId = id;
+    // String email = (String) session.getAttribute("email");
+    // cartService.handleAddProductToCart(email, productId, session, quantity);
+    // return "redirect:/product/" + productId;
+    // }
 
     @GetMapping("order-history")
     public String getOrderHistoryPage(Model model, HttpServletRequest request) {

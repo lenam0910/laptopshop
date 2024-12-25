@@ -1,53 +1,52 @@
 package vn.quocdk.laptopshop.domain.dto;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ProductCriteriaDTO {
-    private Optional<String> page;
-    private Optional<List<String>> factory;
-    private Optional<List<String>> purpose;
-    private Optional<List<String>> price;
-    private Optional<String> sort;
+    private String page;
+    private List<String> factory;
+    private List<String> purpose;
+    private List<String> price;
+    private String sort;
 
-    public Optional<String> getPage() {
+    public String getPage() {
         return page;
     }
 
-    public void setPage(Optional<String> page) {
+    public void setPage(String page) {
         this.page = page;
     }
 
-    public Optional<List<String>> getFactory() {
+    public List<String> getFactory() {
         return factory;
     }
 
-    public void setFactory(Optional<List<String>> factory) {
+    public void setFactory(List<String> factory) {
         this.factory = factory;
     }
 
-    public Optional<List<String>> getPrice() {
-        return price;
-    }
-
-    public void setPrice(Optional<List<String>> price) {
-        this.price = price;
-    }
-
-    public Optional<String> getSort() {
-        return sort;
-    }
-
-    public void setSort(Optional<String> sort) {
-        this.sort = sort;
-    }
-
-    public Optional<List<String>> getPurpose() {
+    public List<String> getPurpose() {
         return purpose;
     }
 
-    public void setPurpose(Optional<List<String>> purpose) {
+    public void setPurpose(List<String> purpose) {
         this.purpose = purpose;
+    }
+
+    public List<String> getPrice() {
+        return price;
+    }
+
+    public void setPrice(List<String> price) {
+        this.price = price;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 
 }
