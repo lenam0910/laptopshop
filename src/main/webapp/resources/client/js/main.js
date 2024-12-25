@@ -216,7 +216,7 @@
                 xhr.setRequestHeader(header, token);
             },
             type: "POST",
-            data: JSON.stringify({ quantity: 1, productId: productId }),
+            data: JSON.stringify({quantity: 1, productId: productId}),
             contentType: "application/json",
             success: function (response) {
                 const sum = +response;
@@ -257,7 +257,7 @@
                 xhr.setRequestHeader(header, token);
             },
             type: "POST",
-            data: JSON.stringify({ quantity: quantity, productId: productId }),
+            data: JSON.stringify({quantity: quantity, productId: productId}),
             contentType: "application/json",
             success: function (response) {
                 const sum = +response;
@@ -276,6 +276,7 @@
             }
         });
     });
+
     function isLogin() {
         const navElement = $("#navbarCollapse");
         const childLogin = navElement.find('a.a-login');

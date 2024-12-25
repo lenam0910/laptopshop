@@ -93,8 +93,8 @@ public class ItemController {
 
     @PostMapping("place-order")
     public String handlePlaceOrder(HttpServletRequest request, @RequestParam("receiverName") String receiverName,
-            @RequestParam("receiverAddress") String receiverAddress,
-            @RequestParam("receiverPhone") String receiverPhone) {
+                                   @RequestParam("receiverAddress") String receiverAddress,
+                                   @RequestParam("receiverPhone") String receiverPhone) {
         User currentUser = new User();
         HttpSession session = request.getSession(false);
         long id = (long) session.getAttribute("id");
