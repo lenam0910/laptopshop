@@ -94,8 +94,7 @@
                                     <div class="col-md-6">
                                         <label class="form-label">Vai trò: </label>
                                         <form:select class="form-select" path="role.name">
-                                            <form:option value="Admin">Admin</form:option>
-                                            <form:option value="User">User</form:option>
+                                            <form:options items="${roles}" itemLabel ="name" itemValue="name"/>
                                         </form:select>
                                     </div>
                                     <div class="col-md-6">

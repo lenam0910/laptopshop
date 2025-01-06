@@ -1,5 +1,7 @@
 package vn.quocdk.laptopshop.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -76,6 +78,10 @@ public class UserService {
 
     public long countOrders() {
         return orderRepository.count();
+    }
+
+    public List<Role> getAllRoles(){
+        return roleRepository.findAll();
     }
 
 }

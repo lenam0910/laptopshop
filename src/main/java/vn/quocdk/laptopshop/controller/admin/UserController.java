@@ -11,10 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import vn.quocdk.laptopshop.domain.Role;
 import vn.quocdk.laptopshop.domain.User;
 import vn.quocdk.laptopshop.service.FileService;
 import vn.quocdk.laptopshop.service.UserService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -69,6 +72,8 @@ public class UserController {
     @GetMapping("/admin/user/create") // GET
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
+        List<Role> roles = userService.getAllRoles();
+        model.addAttribute("roles", roles);
         return "admin/user/create";
     }
 

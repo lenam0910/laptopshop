@@ -65,7 +65,7 @@ public class SecurityConfiguration {
                         .permitAll()
 
                         .requestMatchers("/admin/**").hasRole("Admin")
-
+                        .requestMatchers("/shipper").hasRole("Shipper")
                         .anyRequest().authenticated())
                 .sessionManagement((sessionManagement) -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
