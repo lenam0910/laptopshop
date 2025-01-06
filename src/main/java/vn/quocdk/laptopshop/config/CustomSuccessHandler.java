@@ -43,7 +43,7 @@ public class CustomSuccessHandler implements
     }
 
     protected void clearAuthenticationAttributes(final Authentication authentication,
-                                                 HttpSession session) {
+            HttpSession session) {
         if (session == null) {
             return;
         }
@@ -52,7 +52,7 @@ public class CustomSuccessHandler implements
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+            Authentication authentication) throws IOException, ServletException {
         RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
         HttpSession session = request.getSession(false);
         String targetUrl = determineTargetUrl(authentication);

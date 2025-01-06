@@ -53,7 +53,6 @@ public class SecurityConfiguration {
     public AuthenticationSuccessHandler customSuccessAuthHandler() {
         return new CustomSuccessHandler();
     }
-
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
