@@ -51,15 +51,6 @@ public class ProductController {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
         return "admin/product/detail";
-    } @GetMapping("/admin/product/{id}")
-    public String getProductDetailPage2(@PathVariable long id, Model model) {
-        Product product = productService.getProductById(id);
-        model.addAttribute("product", product);
-        return "admin/product/detail";
-    }public String getProductDetailPage3(@PathVariable long id, Model model) {
-        Product product = productService.getProductById(id);
-        model.addAttribute("product", product);
-        return "admin/product/detail";
     }
 
     @GetMapping("/admin/product/create")
